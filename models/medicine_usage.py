@@ -6,3 +6,4 @@ class MedicineUsage(models.Model):
 
     name = fields.Char(string='Name', required=True)
     parent_category = fields.Char(string='Parent Category', required=True)
+    product_ids = fields.Many2one(comodel_name='product.template', string='Products')

@@ -1,0 +1,30 @@
+<odoo>
+    <record id="product_template_view_inherit" model="ir.ui.view">
+    <field name="name">product.template.inherit</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <field name="arch" type="xml">
+        <!-- Add fields to an existing group -->
+        <xpath expr="//page[@name='general_information']" position="after">
+            <page string="Medicine Info">
+                   <group>
+                       <group string="General Info">
+                            <field name="active_ingredient_ids" widget="many2many_tags"/>
+                            <field name="consuming_way"/>
+                            <field name="medicine_for_ids" widget="many2many_tags"/>
+                            <field name="is_controlled"/>
+                            <field name="is_prescription_only"/>
+                        </group>
+                        <group string="Specific Info">
+                            <field name="strength"/>
+                            <field name="uom"/>
+                            <field name="tape"/>
+                            <field name="bills"/>
+                            <field name="manufacturer"/>
+                        </group>
+                   </group>
+            </page>
+        </xpath>
+    </field>
+    </record>
+</odoo>

@@ -1,7 +1,7 @@
 from odoo import fields, models
 
 class PharmacyActiveIngredient(models.Model):
-    _name = 'pharmacy.active.ingredient'
+    _name = 'active.ingredient'
     _description = 'Medicine active ingredient'
 
     name = fields.Char(string='Active Ingredient', required=True)

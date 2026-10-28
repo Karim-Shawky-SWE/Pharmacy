@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 class product_template(models.Model):
     _inherit = 'product.template'
 
-    active_ingredient_ids = fields.Many2many('model.name', string='Active Ingredients')
+    active_ingredient_ids = fields.Many2many('active.ingredient', string='Active Ingredients')
     consuming_way = fields.Selection([
         ('tablet', 'Tablets'),
         ('capsules', 'Capsules'),
@@ -18,13 +18,19 @@ class product_template(models.Model):
         ('suppository', 'Suppository'),
         ('shampoo', 'Shampoo'),
     ], default='tablet', required=True)
-    medicine_for = fields.Many2many('medicine.usage', string='Medicine For')
+    medicine_for_ids = fields.Many2many('medicine.usage', string='Medicine For')
+
+    category = fields.Char(string='Category')
 
     strength = fields.Float(string='Strength', required=True)
     uom = fields.Many2one('uom.uom', string='Unit of Measure', required=True)
 
     tape = fields.Integer(string='Tape', required=True)
     bills = fields.Integer(string='Bills', required=True)
+
+    manufacturer = fields.Char(string='Manufacturer')
+    is_prescription_only = fields.Boolean(string='Prescription Needed')
+    is_controlled = fields.Boolean(string='Controlled')
 
     @api.constrains('strength')
     def _check_strength(self):
