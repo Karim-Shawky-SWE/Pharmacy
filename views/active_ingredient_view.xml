@@ -5,7 +5,6 @@
         <field name="arch" type="xml">
             <list string="List Title">
                 <field name="name"/>
-                <field name="usage"/>
             </list>
         </field>
     </record>
@@ -20,11 +19,6 @@
                             <field name="name" placeholder="Active Ingredient..."/>
                         </h1>
                     </div>
-                    <group>
-                        <group>
-                            <field name="usage"/>
-                        </group>
-                    </group>
                 </sheet>
             </form>
         </field>

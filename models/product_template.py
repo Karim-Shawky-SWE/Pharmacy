@@ -1,10 +1,12 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
 
-class product_template(models.Model):
+class productTemplate(models.Model):
     _inherit = 'product.template'
 
     active_ingredient_ids = fields.Many2many('active.ingredient', string='Active Ingredients')
+    medicine_for_ids = fields.Many2many('medicine.usage', string='Medicine For')
+
     consuming_way = fields.Selection([
         ('tablet', 'Tablets'),
         ('capsules', 'Capsules'),
@@ -18,7 +20,6 @@ class product_template(models.Model):
         ('suppository', 'Suppository'),
         ('shampoo', 'Shampoo'),
     ], default='tablet', required=True)
-    medicine_for_ids = fields.Many2many('medicine.usage', string='Medicine For')
 
     category = fields.Char(string='Category')
 
@@ -53,3 +54,11 @@ class product_template(models.Model):
                 raise ValidationError("Tape is required for tablets and capsules.")
             if rec.tape <= 0 :
                 raise ValidationError("Tape must be greater than 0")
+
+    def _search_substitutes(self):
+        self.ensure_one()
+        return self.search([
+            ('id', '!=', self.id),
+            ('active_ingredient_ids', 'in', self.active_ingredient_ids.ids),
+            ('strength', '=', self.strength),
+        ])

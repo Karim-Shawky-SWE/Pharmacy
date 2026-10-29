@@ -25,6 +25,11 @@
                    </group>
             </page>
         </xpath>
+        <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="_search_substitutes" type="object" class="oe_stat_button" icon="fa-exchange">
+                    <field name="substitute_count" widget="statinfo" string="Substitutes"/>
+                </button>
+        </xpath>
     </field>
     </record>
 </odoo>

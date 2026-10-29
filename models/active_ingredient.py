@@ -5,6 +5,5 @@ class PharmacyActiveIngredient(models.Model):
     _description = 'Medicine active ingredient'
 
     name = fields.Char(string='Active Ingredient', required=True)
-    usage = fields.Char(string='Usage', required=True)
 
     product_ids = fields.Many2many(comodel_name='product.template', string='Products')
