@@ -1,0 +1,11 @@
+<odoo>
+    <record id="ir_cron_subscription_expiry_reminder" model="ir.cron">
+        <field name="name">Subscription: WhatsApp expiry reminder (7 days)</field>
+        <field name="model_id" ref="model_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_expiry_reminders()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

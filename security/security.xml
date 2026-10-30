@@ -1,0 +1,17 @@
+<odoo>
+    <record id="pharmacy_category" model="ir.module.category">
+        <field name="name">Pharmacy System</field>
+    </record>
+    <record id="pharmacy_manager" model="res.groups">
+        <field name="name">Pharmacy Manager</field>
+        <field name="category_id" ref="Pharmacy.pharmacy_category"/>
+    </record>
+    <record id="pharmacist" model="res.groups">
+        <field name="name">Pharmacist</field>
+        <field name="category_id" ref="Pharmacy.pharmacy_category"/>
+    </record>
+    <record id="pharmacist_assistant" model="res.groups">
+        <field name="name">Pharmacist Assistant</field>
+        <field name="category_id" ref="Pharmacy.pharmacy_category"/>
+    </record>
+</odoo>

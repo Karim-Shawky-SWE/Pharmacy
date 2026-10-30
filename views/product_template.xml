@@ -25,11 +25,41 @@
                    </group>
             </page>
         </xpath>
-        <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="_search_substitutes" type="object" class="oe_stat_button" icon="fa-exchange">
-                    <field name="substitute_count" widget="statinfo" string="Substitutes"/>
+        <xpath expr="//header" position="inside">
+                <button name="action_view_substitutes" type="object" class="btn-primary" icon="fa-exchange">
+                    Substitutes
                 </button>
         </xpath>
     </field>
+    </record>
+    <record id="product_template_view_type_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.view_type.view.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='name']" position="after">
+                <field name="active_ingredient_ids" string="Active Ingredient"/>
+             </xpath>
+
+            <!-- 2. One-click filters -->
+            <xpath expr="//filter[@name='filter_to_sell']" position="after">
+                <separator/>
+                <filter name="filter_prescription_only"
+                        string="Prescription Only"
+                        domain="[('is_prescription_only', '=', True)]"/>
+                <filter name="filter_controlled"
+                        string="Controlled Drugs"
+                        domain="[('is_controlled', '=', True)]"/>
+                <filter name="filter_otc"
+                        string="Over the Counter"
+                        domain="[('is_prescription_only', '=', False)]"/>
+            </xpath>
+
+            <!-- 3. Group by -->
+            <xpath expr="//group" position="inside">
+                <filter name="group_by_ingredient" string="Active Ingredient"
+                        context="{'group_by': 'active_ingredient_ids'}"/>
+            </xpath>
+        </field>
     </record>
 </odoo>

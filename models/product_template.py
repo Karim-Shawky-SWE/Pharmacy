@@ -33,6 +33,7 @@ class productTemplate(models.Model):
     is_prescription_only = fields.Boolean(string='Prescription Needed')
     is_controlled = fields.Boolean(string='Controlled')
 
+
     @api.constrains('strength')
     def _check_strength(self):
         if self.strength <= 0:
@@ -40,12 +41,12 @@ class productTemplate(models.Model):
         elif self.strength > 10000:
             raise ValidationError('Strength must be less than 10000')
 
-    @api.constrains('uom')
-    def _check_uom(self):
-        if self.uom == 'g' and self.strength >= 10:
-            raise ValidationError('Strength must be less than or equal 10 g')
-        elif self.uom == 'mg' and self.strength >= 3000:
-            raise ValidationError('Strength must be less than or equal 3000 mg')
+    # @api.constrains('uom')
+    # def _check_uom(self):
+    #     if self.uom == 'g' and self.strength >= 10:
+    #         raise ValidationError('Strength must be less than or equal 10 g')
+    #     elif self.uom == 'mg' and self.strength >= 3000:
+    #         raise ValidationError('Strength must be less than or equal 3000 mg')
 
     @api.constrains('consuming_way', 'tape')
     def _check_tape_required(self):
@@ -61,4 +62,15 @@ class productTemplate(models.Model):
             ('id', '!=', self.id),
             ('active_ingredient_ids', 'in', self.active_ingredient_ids.ids),
             ('strength', '=', self.strength),
+            ('consuming_way', '=', self.consuming_way),
         ])
+
+    def action_view_substitutes(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Substitutes',
+            'res_model': 'product.template',
+            'view_mode': 'list,form',
+            'domain': [('id', 'in', self._search_substitutes().ids)],
+        }

@@ -7,6 +7,7 @@
  ],
  'data': [
      'security/ir.model.access.csv',
+     'security/security.xml',
      'views/product_template.xml',
      'views/active_ingredient_view.xml',
      'views/medicine_usage.xml',
