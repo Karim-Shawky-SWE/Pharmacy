@@ -1,11 +1,14 @@
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 class productTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     active_ingredient_ids = fields.Many2many('active.ingredient', string='Active Ingredients')
     medicine_for_ids = fields.Many2many('medicine.usage', string='Medicine For')
+    # lot_ids = fields.One2many('stock.lot', string='Partner')
+
 
     consuming_way = fields.Selection([
         ('tablet', 'Tablets'),
@@ -74,3 +77,23 @@ class productTemplate(models.Model):
             'view_mode': 'list,form',
             'domain': [('id', 'in', self._search_substitutes().ids)],
         }
+
+    def _cron_flag_near_expiry(self):
+        limit = fields.Datetime.now() + timedelta(days=90)
+        lots = self.env['stock.lot'].search([
+            ('expiration_date', '!=', False),
+            ('expiration_date', '<=', limit),
+            ('product_qty', '>', 0),
+        ])
+        for lot in lots:
+            days = (lot.expiration_date - fields.Datetime.now()).days
+            if days < 0:
+                action = 'dispose'
+            elif days <= 30:
+                action = 'return'
+            else:
+                action = 'discount'
+            lot.write({
+                'suggested_action': action,
+                'days_to_expiration': days,
+            })

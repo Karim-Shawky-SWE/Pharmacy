@@ -3,7 +3,7 @@
  'category': "",
  'version': "18.0.0.1.0",
  'depends': [
-     'base', 'sale_management', 'stock', 'contacts', 'point_of_sale', 'account', 'purchase'
+     'base', 'sale_management', 'stock', 'contacts', 'point_of_sale', 'account', 'purchase','product_expiry'
  ],
  'data': [
      'security/ir.model.access.csv',
@@ -11,6 +11,7 @@
      'views/product_template.xml',
      'views/active_ingredient_view.xml',
      'views/medicine_usage.xml',
+     'views/stock_lot.xml',
  ],
  'assets' : {
  }

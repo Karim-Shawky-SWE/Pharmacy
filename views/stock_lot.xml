@@ -1,0 +1,18 @@
+<odoo>
+    <record id="stock_lot_list_expiry_decoration" model="ir.ui.view">
+    <field name="name">stock.lot.list.expiry.decoration</field>
+    <field name="model">stock.lot</field>
+    <field name="inherit_id" ref="
+stock.view_production_lot_tree"/>
+    <field name="arch" type="xml">
+        <xpath expr="//list" position="attributes">
+            <attribute name="decoration-danger">days_to_expiration &lt; 0</attribute>
+            <attribute name="decoration-warning">days_to_expiration &gt;= 0 and days_to_expiration &lt;= 30</attribute>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="after">
+            <field name="days_to_expiration"/>
+            <field name="suggested_action"/>
+        </xpath>
+    </field>
+</record>
+</odoo>
